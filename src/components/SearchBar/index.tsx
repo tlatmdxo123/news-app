@@ -4,16 +4,11 @@ import { MdSearch } from "react-icons/md";
 
 interface Props{
     placeholder:string,
-    searchByQuery:any,
+    element:React.MutableRefObject<HTMLInputElement | null>
 }
 
-function SearchBar({placeholder,searchByQuery}:Props) {
+function SearchBar({placeholder,element}:Props) {
     const [query,setQuery] = useState('')
-    const changeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value
-        setQuery(state => value)
-        searchByQuery(value)
-    }
     return ( 
         <Container>
             <Label htmlFor="query">
@@ -23,9 +18,10 @@ function SearchBar({placeholder,searchByQuery}:Props) {
             </Label>
             <Input
                 placeholder={placeholder}
-                onChange={(e) => changeHandler(e)}
-                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 id="query"
+                value={query}
+                ref={element}
                 autoFocus
             />
         </Container>
