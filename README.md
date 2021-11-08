@@ -7,7 +7,8 @@ api에서 뉴스 데이터를 가져와 보여주는 웹페이지 입니다.
 | 이름 | 목적 |
 |---|:---:|
 | `emotion` |           컴포넌트 스타일링           | 
-| `swr` |           Data fetching           |  
+| `axios` |           Data fetching          | 
+| `swr` |           Data fetching hook          |  
 | `jest` |           React test           |  
 | `rxjs` |           비동기 처리           |  
 | `react-icons` |           아이콘 컴포넌트           | 
