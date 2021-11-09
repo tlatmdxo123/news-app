@@ -27,11 +27,23 @@ function Main() {
             <InputContainer>
                 <SearchBar placeholder='검색어를 입력하세요' element={inputEl}/>
             </InputContainer>
-            {query.length === 0 ? <p>검색어를 입력해주세요</p> : <Articles query={query}/>}
+            <Container>
+                <Title>News</Title>
+                {query.length === 0 ? <p>검색어를 입력해주세요</p> : <Articles query={query} pageSize={20}/>}
+            </Container>
+            
         </>
         
     );
 }
+
+const Container = styled.article`
+
+`
+
+const Title = styled.h1`
+
+`
 
 const InputContainer = styled.div`
     width: 100%;

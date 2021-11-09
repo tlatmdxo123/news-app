@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useSWR from 'swr'
 import { fetcher } from '../../fetch/fetcher';
 import styled from '@emotion/styled'
 import Article from './Article';
+import PageIndexes from '../PageIndexes';
 
 interface Article{
     "source": {
@@ -18,42 +19,40 @@ interface Article{
     "content": string
 }
 interface Props{
-    query:string
+    query:string,
+    pageSize:number
 }
-function Articles({query}:Props) {
-    const {articles,isLoading,isError} = useArticles(query,2)
+function Articles({query,pageSize}:Props) {
+    const [page,setPage] = useState(1)
+    const {articles,totalResults,isLoading,isError} = useArticles(query,page,pageSize)
 
     if(isLoading) return <div>loading...</div>
     if(isError) return <div>error!</div>
     return (
-        <Container>
-            <Title>News</Title>
+        <>
             {articles.map((article:Article) => {
                 return (<Link href={article.url}>
                     <Article title={article.title} desc={article.description}/>
                 </Link>)
             })}
-        </Container>
+            <PageIndexes total={Math.ceil(totalResults/pageSize)} page={page} setPage={setPage}/>
+        </>
+        
     );
 }
 
-const useArticles = (query:string,page:number) => {
-    const {data,error} = useSWR(`/everything?q=${query}&pageSize=20&page=${page}`,fetcher)
+const useArticles = (query:string,page:number,pageSize:number) => {
+    const {data,error} = useSWR(`/everything?q=${query}&pageSize=${pageSize}&page=${page}`,fetcher)
 
     return {
         articles:data?.articles,
+        totalResults:data?.totalResults,
         isLoading:!error && !data,
         isError:error
     }
 }
 
-const Container = styled.article`
-
-`
-
-const Title = styled.h1`
-
-`
+const Container = styled.div``
 
 const Link = styled.a`
 
