@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSWR from 'swr'
 import { fetcher } from '../../fetch/fetcher';
 import styled from '@emotion/styled'
 import Article from './Article';
 import PageIndexes from '../PageIndexes';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 interface Article{
     "source": {
@@ -24,6 +25,16 @@ interface Props{
 }
 function Articles({query,pageSize}:Props) {
     const [page,setPage] = useState(1)
+    const [localPage,setLocalPage] = useLocalStorage('page')
+    useEffect(() => {
+        if(localPage!==null) setPage(+localPage)
+    })
+
+    const onClickSetPage = (page:number) => {
+        setPage(page)
+        setLocalPage(page.toString())
+    }
+
     const {articles,totalResults,isLoading,isError} = useArticles(query,page,pageSize)
 
     if(isLoading) return <div>loading...</div>
@@ -35,7 +46,7 @@ function Articles({query,pageSize}:Props) {
                     <Article title={article.title} desc={article.description}/>
                 </Link>)
             })}
-            <PageIndexes total={Math.ceil(totalResults/pageSize)} page={page} setPage={setPage}/>
+            <PageIndexes total={Math.ceil(totalResults/pageSize)} page={page} setPage={onClickSetPage}/>
         </>
         
     );

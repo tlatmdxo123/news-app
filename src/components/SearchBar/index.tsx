@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled'
 import { MdSearch } from "react-icons/md";
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 interface Props{
     placeholder:string,
@@ -9,6 +10,10 @@ interface Props{
 
 function SearchBar({placeholder,element}:Props) {
     const [query,setQuery] = useState('')
+    const [localQuery,setLocalQuery] = useLocalStorage('query')
+    useEffect(() => {
+      if(localQuery!==null) setQuery(localQuery)
+    })
     return ( 
         <Container>
             <Label htmlFor="query">

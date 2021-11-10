@@ -5,11 +5,12 @@ import {MdKeyboardArrowLeft,MdKeyboardArrowRight} from 'react-icons/md'
 interface Props{
     total:number,
     page:number,
-    setPage:React.Dispatch<React.SetStateAction<number>>
+    setPage:(page:number) => void
 }
 
 function PageIndexes({total,page,setPage}:Props) {
     const [start,setStart] = useState(1)
+
     useEffect(() => {
         if(page%10 === 1){
             setStart(page)

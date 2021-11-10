@@ -4,11 +4,25 @@ import SearchBar from '../components/SearchBar';
 import Articles from '../components/Articles';
 import {fromEvent} from 'rxjs'
 import {debounceTime, map} from 'rxjs/operators'
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 
 function Main() {
     const [query,setQuery] = useState('')
     const inputEl = useRef<HTMLInputElement>(null)
+    const [localQuery,setLocalQuery] = useLocalStorage('query')
+
+    useEffect(() => {
+        if(query.length > 0){
+            setLocalQuery(query)
+        }
+    },[query])
+
+    useEffect(() => {
+        if(localQuery !== null){
+            setQuery(localQuery)
+        }
+    })
 
     useEffect(() => {
         const chages = fromEvent(inputEl.current as HTMLInputElement,'keyup')
