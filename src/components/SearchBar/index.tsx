@@ -11,9 +11,9 @@ interface Props{
 function SearchBar({placeholder,element}:Props) {
     const [query,setQuery] = useState('')
     const [localQuery,setLocalQuery] = useLocalStorage('query')
-    useEffect(() => {
-      if(localQuery!==null) setQuery(localQuery)
-    })
+    // useEffect(() => {
+    //   if(localQuery!==null) setQuery(localQuery)
+    // })
     return ( 
         <Container>
             <Label htmlFor="query">
@@ -24,8 +24,8 @@ function SearchBar({placeholder,element}:Props) {
             <Input
                 placeholder={placeholder}
                 onChange={(e) => setQuery(e.target.value)}
-                id="query"
                 value={query}
+                id="query"
                 ref={element}
                 autoFocus
             />

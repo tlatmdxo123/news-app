@@ -12,17 +12,17 @@ function Main() {
     const inputEl = useRef<HTMLInputElement>(null)
     const [localQuery,setLocalQuery] = useLocalStorage('query')
 
-    useEffect(() => {
-        if(query.length > 0){
-            setLocalQuery(query)
-        }
-    },[query])
+    // useEffect(() => {
+    //     if(query.length > 0){
+    //         setLocalQuery(query)
+    //     }
+    // },[query])
 
-    useEffect(() => {
-        if(localQuery !== null){
-            setQuery(localQuery)
-        }
-    })
+    // useEffect(() => {
+    //     if(localQuery !== null){
+    //         setQuery(localQuery)
+    //     }
+    // })
 
     useEffect(() => {
         const chages = fromEvent(inputEl.current as HTMLInputElement,'keyup')
@@ -56,7 +56,9 @@ const Container = styled.article`
 `
 
 const Title = styled.h1`
-
+    font-size: ${props => props.theme.fontSize[700]};
+    margin-bottom: 30px;
+    font-weight: bold;
 `
 
 const InputContainer = styled.div`
