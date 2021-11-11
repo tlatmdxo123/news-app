@@ -26,9 +26,9 @@ interface Props{
 function Articles({query,pageSize}:Props) {
     const [page,setPage] = useState(1)
     const [localPage,setLocalPage] = useLocalStorage('page')
-    useEffect(() => {
-        if(localPage!==null) setPage(+localPage)
-    })
+    // useEffect(() => {
+    //     if(localPage!==null) setPage(+localPage)
+    // })
 
     const onClickSetPage = (page:number) => {
         setPage(page)
